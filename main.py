@@ -1,26 +1,26 @@
 import random
 
 # ratings = [
-# 	[1,1,4.0],
-# 	[1,3,4.0],
-# 	[1,6,4.0],
-# 	[1,47,5.0],
-# 	[2,50,5.0],
-# 	[2,1,4.0],
-# 	[2,3,4.0],
-# 	[2,6,4.0],
-# 	[3,47,5.0],
-# 	[3,50,5.0],
-# 	[3,1,4.0],
-# 	[4,3,4.0],
-# 	[4,6,4.0],
-# 	[5,47,5.0],
-# 	[5,50,5.0],
-# 	[6,1,4.0],
-# 	[7,3,4.0],
-# 	[8,6,4.0],
-# 	[9,47,5.0],
-# 	[9,50,5.0]
+#	[1,1,4.0],
+#	[1,3,4.0],
+#	[1,6,4.0],
+#	[1,47,5.0],
+#	[2,50,5.0],
+#	[2,1,4.0],
+#	[2,3,4.0],
+#	[2,6,4.0],
+#	[3,47,5.0],
+#	[3,50,5.0],
+#	[3,1,4.0],
+#	[4,3,4.0],
+#	[4,6,4.0],
+#	[5,47,5.0],
+#	[5,50,5.0],
+#	[6,1,4.0],
+#	[7,3,4.0],
+#	[8,6,4.0],
+#	[9,47,5.0],
+#	[9,50,5.0]
 # ]
 
 ratings = [
@@ -123,9 +123,9 @@ ratings = [
 [17, 16, 4.0],
 [18, 23, 3.0],
 [19, 28, 5.0],
-[20, 34, 2.0]
+[20, 34, 2.0],
+[55, 23, 4.0]
 ]
-
 
 ##### Create Utility matrix out of an array
 def create_matrix(data):
@@ -214,9 +214,9 @@ for item, rating in suggest_items(1):
 	print(f"Item: {item}, Predicted Rating: {rating:.1f}")
 
 ##### Utility matrix
-print("Utility Matrix:")
-for row in R:
-	print(row)
+# print("Utility Matrix:")
+# for row in R:
+# 	print(row)
 
 # print("User to Index mapping:", user_to_index)
 # print("Item to Index mapping:", item_to_index)
@@ -224,8 +224,6 @@ for row in R:
 # print("Items:", items)
 
 #### Preticted ratings matrix
-print("Predicted ratings Matrix:")
-for r in predicted_ratings:
-	print(r)
-
-
+# print("Predicted ratings Matrix:")
+# for r in predicted_ratings:
+# 	print(r)
