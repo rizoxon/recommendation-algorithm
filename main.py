@@ -1,27 +1,11 @@
 import random
 
-# ratings = [
-#	[1,1,4.0],
-#	[1,3,4.0],
-#	[1,6,4.0],
-#	[1,47,5.0],
-#	[2,50,5.0],
-#	[2,1,4.0],
-#	[2,3,4.0],
-#	[2,6,4.0],
-#	[3,47,5.0],
-#	[3,50,5.0],
-#	[3,1,4.0],
-#	[4,3,4.0],
-#	[4,6,4.0],
-#	[5,47,5.0],
-#	[5,50,5.0],
-#	[6,1,4.0],
-#	[7,3,4.0],
-#	[8,6,4.0],
-#	[9,47,5.0],
-#	[9,50,5.0]
-# ]
+#### Mathematical namings
+# R = utility matrix
+# P = user factor matrix
+# Q = item factor matrix
+
+# Gradient descent is a mathematical technique and optimization algorithm used to find the minimum values of a function, or local minima. It's often used to train machine learning models and neural networks by minimizing errors between predicted and actual results.
 
 ratings = [
 [1, 3, 4.0],
@@ -133,14 +117,14 @@ def create_matrix(data):
 	users = sorted(set(row[0] for row in data))
 	items = sorted(set(row[1] for row in data))
 
-	# Create mappings from IDs to indices
-	user_to_index = {}
+	# Create mappings from IDs to indexes
+	user_indexes = {}
 	for i in range(len(users)):
-		user_to_index[users[i]] = i
+		user_indexes[users[i]] = i
 	
-	item_to_index = {}
+	item_indexes = {}
 	for i in range(len(items)):
-		item_to_index[items[i]] = i
+		item_indexes[items[i]] = i
 
 	# Initialize the matrix with zeros
 	matrix = []
@@ -150,12 +134,12 @@ def create_matrix(data):
 
 	# Fill the matrix with ratings
 	for user, item, rating in data:
-		user_index = user_to_index[user]
-		item_index = item_to_index[item]
+		user_index = user_indexes[user]
+		item_index = item_indexes[item]
 		matrix[user_index][item_index] = rating
 
-	return matrix, user_to_index, item_to_index, users, items
-R, user_to_index, item_to_index, users, items = create_matrix(ratings)
+	return matrix, user_indexes, item_indexes, users, items
+R, user_indexes, item_indexes, users, items = create_matrix(ratings)
 
 ##### Parameters
 num_users = len(users)
@@ -173,10 +157,10 @@ Q = []
 for i in range(num_items):
 	Q.append([random.random()])
 
-#### Generate rating by simple user, item matrix multiplication
+#### Generate rating by user, item matrix multiplication
 def calc_rating(user, item):
-	user_index = user_to_index[user]
-	item_index = item_to_index[item]
+	user_index = user_indexes[user]
+	item_index = item_indexes[item]
 	rating = P[user_index][0] * Q[item_index][0]
 	return round(rating, 1)
 
@@ -188,7 +172,7 @@ for _ in range(num_iterations):
 				# calculate the diffrence in prediction
 				diff = R[i][j] - calc_rating(users[i], items[j])
 
-				# (gradient descent) Update user and item feature matrices
+				# Update user and item feature matrices (Gradient descent with L2 regularization)
 				P[i][0] += learning_rate * (diff * Q[j][0] - regularization * P[i][0])
 				Q[j][0] += learning_rate * (diff * P[i][0] - regularization * Q[j][0])
 
@@ -206,7 +190,7 @@ for i in range(num_users):
 def suggest_items(user):
 	recommendations = []
 	for j in range(len(items)):
-		if R[user_to_index[user]][j] == 0: recommendations.append((items[j], calc_rating(user, items[j])))
+		if R[user_indexes[user]][j] == 0: recommendations.append((items[j], calc_rating(user, items[j])))
 	recommendations.sort(key=lambda x: x[1], reverse=True)
 	return recommendations
 
@@ -214,16 +198,16 @@ for item, rating in suggest_items(1):
 	print(f"Item: {item}, Predicted Rating: {rating:.1f}")
 
 ##### Utility matrix
-# print("Utility Matrix:")
-# for row in R:
-# 	print(row)
+print("Utility Matrix:")
+for row in R:
+	print(row)
 
-# print("User to Index mapping:", user_to_index)
-# print("Item to Index mapping:", item_to_index)
+# print("User to Index mapping:", user_indexes)
+# print("Item to Index mapping:", item_indexes)
 # print("Users:", users)
 # print("Items:", items)
 
 #### Preticted ratings matrix
-# print("Predicted ratings Matrix:")
-# for r in predicted_ratings:
-# 	print(r)
+print("Predicted ratings Matrix:")
+for r in predicted_ratings:
+	print(r)
