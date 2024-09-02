@@ -165,7 +165,7 @@ def calc_rating(user, item):
 	return round(rating, 1)
 
 #### Optimize Factor matrixes
-for _ in range(num_iterations):
+for i in range(num_iterations):
 	for i in range(num_users):
 		for j in range(num_items):
 			if R[i][j] > 0: # Only consider observed ratings
